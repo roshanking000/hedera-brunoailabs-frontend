@@ -1,0 +1,39 @@
+.top_collections::-webkit-scrollbar-track {
+    max-height: 50% !important;
+    height: 50% !important;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.swiper-pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
+    margin: 10% 0;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #9909ac !important;
+}

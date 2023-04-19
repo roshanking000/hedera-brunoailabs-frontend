@@ -1,0 +1,37 @@
+.lend-page .page-header .heading {
+    color: #cf2e8c;
+    text-shadow: 4px 4px 0 rgb(207 46 140 / 25%);
+}
+
+.lend-page .page-header .heading {
+    color: #cf2e8c;
+    text-shadow: 4px 4px 0 rgb(207 46 140 / 25%);
+}
+
+.checkbox.filter label.checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.lend-page .filter label.checkbox .checkmark:after {
+    border: solid #cf2e8c;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #16152d;
+    border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .4);
+    border-radius: 12px;
+}

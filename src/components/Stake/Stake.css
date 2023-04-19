@@ -1,0 +1,10 @@
+.section-module--stake {
+    background: linear-gradient(#29334C, #05132E);
+    padding-top: 10rem;
+    position: 'relative';
+    height: fit-content;
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}

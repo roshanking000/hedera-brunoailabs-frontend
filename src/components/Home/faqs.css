@@ -1,0 +1,53 @@
+.accordion-module--content {
+    color: #646d79;
+    display: block;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    height: 0;
+    letter-spacing: .1px;
+    line-height: 24px;
+    overflow: hidden;
+    transition: height .2s ease-in-out;
+}
+
+.accordion-module--button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Lato';
+    font-size: 18px;
+    font-weight: 700;
+    gap: 1rem;
+    letter-spacing: 0;
+    line-height: 24px;
+    min-height: 80px;
+    padding: 1rem 0;
+    position: relative;
+    width: 100%;
+}
+
+.accordion-module--button svg {
+    color: #7e5bd6;
+    min-width: 20px;
+}
+
+.accordion-module--button:after {
+    background-color: #16152d;
+    bottom: 0;
+    content: "";
+    height: 1px;
+    left: 0;
+    opacity: .08;
+    position: absolute;
+    right: 0;
+    transition: opacity .2s ease-in-out;
+}
+
+.accordion-module--inner {
+    border-left: 3px solid #EBD259;
+    line-height: 24px;
+    margin: 0 0 2rem 8px;
+    padding: 0 1rem;
+}

@@ -1,0 +1,52 @@
+.background-module--joinus {
+    bottom: -25%;
+}
+
+.background-module--background {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
+}
+
+.background-module--joinus:after,
+.background-module--joinus:before {
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    transform: translateZ(0);
+    z-index: 2;
+}
+
+.background-module--joinus:before {
+    filter: blur(87px);
+    left: 10%;
+    margin: -229.5px 0 0 -229.5px;
+    top: 30%;
+    width: 459px;
+}
+
+.background-module--joinus:after {
+    bottom: 20%;
+    filter: blur(130.611px);
+    left: 90%;
+    margin: -383px 0 0 -383px;
+    width: 766px;
+}
+
+.background-module--joinus:before {
+    filter: blur(87px);
+    left: 10%;
+    margin: -229.5px 0 0 -229.5px;
+    top: 30%;
+    width: 459px;
+}

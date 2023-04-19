@@ -1,0 +1,54 @@
+.app_layout {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    background: #3a3948;
+    color: #fff;
+    /* overflow: hidden; */
+}
+
+/* nav.bar .menu a {
+    display: block;
+    padding: 14px 0;
+    font-size: 14px;
+    position: relative;
+    top: 8px;
+    opacity: 0;
+    transition: top .2s, opacity .2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+} */
+/* 
+.menu div.stats,
+nav.bar .menu div.help,
+nav.bar .menu div.wallet-locked,
+nav.bar .menu div.account {
+    padding: 4px 0px;
+    width: 128px;
+    position: relative;
+    margin-right: 16px;
+    text-align: center;
+    overflow: initial;
+    box-sizing: border-box;
+}
+
+nav.bar .menu div.lend {
+    position: relative;
+
+}
+
+nav.bar .menu div.lend:before {
+    content: "";
+    width: 100vw;
+    background-color: #cf2e8c;
+    height: 100%;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    bottom: -100%;
+    transition: bottom .4s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+} */

@@ -1,0 +1,18 @@
+/* nav.bar .menu div.lend {
+    border-bottom: 4px solid #cf2e8c;
+} */
+
+nav.bar .menu div.lend,
+nav.bar .menu div.borrow,
+nav.bar .menu div.stats,
+nav.bar .menu div.help,
+nav.bar .menu div.wallet-locked,
+nav.bar .menu div.account {
+    padding: 10px 0px;
+    width: 128px;
+    position: relative;
+    text-align: center;
+    overflow: initial;
+    box-sizing: border-box;
+    font-weight: 700;
+}
