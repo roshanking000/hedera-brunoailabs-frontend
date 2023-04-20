@@ -53,6 +53,7 @@ const StakePage = () => {
 
     const getTotalInfo = async () => {
         setLoadingView(true);
+        console.log("start >>>>>>")
         await getStakeRatio();
         await getStakedNFTList();
         await getXVerseNFTList();
@@ -60,6 +61,8 @@ const StakePage = () => {
     }
 
     const getStakeRatio = async () => {
+        console.log("getStakeRatio >>>>>>>>>")
+        console.log(env.SERVER_URL + "/api/stake/load_stake_ratio")
         let _stakeRatioResult = await getRequest(env.SERVER_URL + "/api/stake/load_stake_ratio");
         if (!_stakeRatioResult) {
             toast.error("Something wrong with server!");
@@ -71,6 +74,7 @@ const StakePage = () => {
             setLoadingView(false);
             return;
         }
+        console.log(_stakeRatioResult.data)
         setStakeRatio(_stakeRatioResult.data);
     }
 

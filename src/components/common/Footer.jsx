@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">
-            <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />
+            <img className='rounded-[30px] mr-2' alt='logo' loading='lazy' width="36" height="36" src='/icons/brunoailabs-logo.png' />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">BrunoAILabs</span>
           </a>
           <div className="px-4 py-6 md:flex md:items-center md:justify-between">
