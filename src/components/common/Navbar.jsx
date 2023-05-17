@@ -35,7 +35,7 @@ const Navbar = ({
   return (
     <nav className="bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-600">
       <div className="w-full flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://brunoailabs.online" className="flex items-center ml-4 md:ml-24">
+        <a href="https://brunoailabs.online" target="_blank" rel='noreferrer' className="flex items-center ml-4 md:ml-24">
           <img src="/icons/brunoailabs-logo.png" className="rounded-full h-10 mr-3" alt="Flowbite Logo" />
           <span className="hidden md:block self-center text-2xl font-semibold whitespace-nowrap text-white">BrunoAILabs</span>
         </a>

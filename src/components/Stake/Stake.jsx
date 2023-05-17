@@ -78,7 +78,7 @@ const StakePage = () => {
             setLoadingView(false);
             return;
         }
-        setStakeRatio(_stakeRatioResult.data.stakeRatio);
+        setStakeRatio(_stakeRatioResult.data.stakeRatio.toFixed(1));
         setMintedNFTCount(_stakeRatioResult.data.mintedNFTCount)
         setTotalNFTCount(_stakeRatioResult.data.totalNFTCount)
     }
