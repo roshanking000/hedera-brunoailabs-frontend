@@ -413,7 +413,7 @@ const StakePage = () => {
         }
 
         //set reward amount 0
-        const _response = await postRequest(env.SERVER_URL + "/api/stake/set_claim_reward", { walletId: walletId });
+        const _response = await postRequest(env.SERVER_URL + "/api/stake/set_claim_reward", { accountId: walletId });
         if (!_response) {
             toast.error("Something wrong with server!");
             setLoadingView(false);
@@ -449,7 +449,7 @@ const StakePage = () => {
                             </span>
                         </div>
                         <div className='w-4/5 h-7 mb-4 bg-[#134C73] mt-3'>
-                            <div className="flex items-center justify-center bg-[#FFDD41] h-7 text-sm text-black text-center leading-none rounded-lg" style={{
+                            <div className="flex items-center justify-center bg-[#FFDD41] h-7 text-sm text-black text-center leading-none" style={{
                                 width: `${stakeRatio}%`,
                             }}>
                             </div>
