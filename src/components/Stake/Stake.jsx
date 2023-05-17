@@ -256,7 +256,7 @@ const StakePage = () => {
             return;
         }
 
-        // reload hash park nft list
+        // reload nft list
         let _currentNFTList = [];
         for (let i = 0; i < unstakedNFTList.length; i++)
             _currentNFTList.push(unstakedNFTList[i]);
@@ -265,7 +265,7 @@ const StakePage = () => {
                 _currentNFTList.splice(i, 1);
         }
 
-        // reload hash park nft list
+        // reload nft list
         await getStakeRatio();
         await getStakedNFTList();
         setUnstakedNFTList(_currentNFTList);
@@ -302,7 +302,7 @@ const StakePage = () => {
             return;
         }
 
-        // reload hash park nft list
+        // reload nft list
         await getStakeRatio();
         await getStakedNFTList();
         setUnstakedNFTList([]);
@@ -340,7 +340,7 @@ const StakePage = () => {
             return;
         }
 
-        // reload hash park nft list
+        // reload nft list
         let _currentNFTList = [];
         for (let i = 0; i < stakedNFTList.length; i++)
             _currentNFTList.push(stakedNFTList[i]);
@@ -349,7 +349,7 @@ const StakePage = () => {
                 _currentNFTList.splice(i, 1);
         }
 
-        // reload hash park nft list
+        // reload nft list
         await getStakeRatio();
         await getStakedNFTList();
         setUnstakedNFTCount(unstakedNFTCount + 1);
@@ -378,7 +378,7 @@ const StakePage = () => {
             return;
         }
 
-        // reload hash park nft list
+        // reload nft list
         await getStakeRatio();
         await getStakedNFTList();
         setUnstakedNFTCount(stakedNftList.length);
@@ -403,6 +403,19 @@ const StakePage = () => {
         const _tsxResult = await receiveReward(_res.data);
         if (!_tsxResult) {
             toast.error("Error! The transaction was rejected, or failed! Please try again!");
+            setLoadingView(false);
+            return;
+        }
+
+        //set reward amount 0
+        const _response = await postRequest(env.SERVER_URL + "/api/stake/set_claim_reward", { walletId: walletId });
+        if (!_response) {
+            toast.error("Something wrong with server!");
+            setLoadingView(false);
+            return;
+        }
+        if (!_response.result) {
+            toast.error(_response.error);
             setLoadingView(false);
             return;
         }

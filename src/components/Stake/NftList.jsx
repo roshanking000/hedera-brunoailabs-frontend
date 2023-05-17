@@ -51,7 +51,7 @@ const NftList = ({
                     <div className='flex flex-col w-full mb-12 pl-8 pt-8 pr-8 pb-8 gap-8 rounded-xl'>
                         {
                             unstakedNFTList?.length !== 0 && unstakedNFTList?.length <= 10 &&
-                            <button type="button" className='w-32 inline-flex items-center justify-center px-5 py-2.5 text-sm text-center text-black bg-[#FFDD41] rounded-full hover:scale-[0.98]'
+                            <button type="button" className='hidden w-32 inline-flex items-center justify-center px-5 py-2.5 text-sm text-center text-black bg-[#FFDD41] rounded-full hover:scale-[0.98]'
                                 style={{
                                     fontFamily: 'Poppins Bold',
                                 }}
@@ -84,7 +84,7 @@ const NftList = ({
                     <div className='flex flex-col w-4/5 bg-[#064976] mb-12 pl-8 pt-8 pr-8 pb-8 gap-8 rounded-xl'>
                         {
                             stakedNFTList?.length !== 0 && stakedNFTList?.length <= 10 &&
-                            <button type="button" className='w-32 inline-flex items-center justify-center px-5 py-2.5 text-sm text-center text-black bg-[#FFDD41] rounded-full hover:scale-[0.98]'
+                            <button type="button" className='hidden w-32 inline-flex items-center justify-center px-5 py-2.5 text-sm text-center text-black bg-[#FFDD41] rounded-full hover:scale-[0.98]'
                                 style={{
                                     fontFamily: 'Poppins Bold',
                                 }}
