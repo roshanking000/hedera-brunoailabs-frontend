@@ -17,8 +17,8 @@ const NftList = ({
     return (
         <>
             <div className='flex flex-col items-center justify-center pb-48'>
-                <div className='flex flex-row items-center justify-center w-4/5'>
-                    <button type="button" className='w-full inline-flex items-center justify-center px-5 py-2.5 text-lg font-medium text-center text-black bg-[#FFDD41] rounded-lg hover:scale-y-105'
+                <div className='flex flex-row items-center justify-center 2xl:w-1/3 xl:w-1/2 w-full px-4'>
+                    <button type="button" className='w-full inline-flex items-center justify-center px-1 py-2.5 text-lg md:text-2xl font-medium text-center text-black bg-[#FFDD41] rounded-lg hover:scale-y-105 truncate ...'
                         style={{
                             fontFamily: 'Poppins Bold',
                         }}
@@ -31,7 +31,7 @@ const NftList = ({
                             {stakedNFTCount}
                         </span>
                     </button>
-                    <button type="button" className='w-full inline-flex items-center justify-center px-5 py-2.5 text-lg font-medium text-center text-black bg-[#FFDD41] rounded-lg hover:scale-y-105'
+                    <button type="button" className='w-full flex flex-row items-center justify-center px-1 py-2.5 text-lg md:text-2xl font-medium text-center text-black bg-[#FFDD41] rounded-lg hover:scale-y-105 truncate ...'
                         style={{
                             fontFamily: 'Poppins Bold',
                         }}
@@ -40,7 +40,7 @@ const NftList = ({
                             getUnSkatedNFTList();
                         }}
                     >
-                        NFTS IN WALLET
+                        <span className='truncate ...'>NFTS IN WALLET</span>
                         <span className="bg-[#FF4141] text-sm font-semibold text-black ml-2 px-2.5 py-0.5 rounded-full">
                             {unstakedNFTCount}
                         </span>
@@ -48,7 +48,7 @@ const NftList = ({
                 </div>
                 {
                     currentTab === 'NFTS IN WALLET' && unstakedNFTList &&
-                    <div className='flex flex-col w-4/5 bg-[#064976] mb-12 pl-8 pt-8 pr-8 pb-8 gap-8 rounded-xl'>
+                    <div className='flex flex-col w-full mb-12 pl-8 pt-8 pr-8 pb-8 gap-8 rounded-xl'>
                         {
                             unstakedNFTList?.length !== 0 && unstakedNFTList?.length <= 10 &&
                             <button type="button" className='w-32 inline-flex items-center justify-center px-5 py-2.5 text-sm text-center text-black bg-[#FFDD41] rounded-full hover:scale-[0.98]'

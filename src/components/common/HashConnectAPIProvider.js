@@ -230,201 +230,18 @@ export default function HashConnectProvider({
     return false;
   }
 
-  const allowanceHbar = async (amount_) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-    const _treasuryId = AccountId.fromString(env.TREASURY_ID);
-
-    const _hbar = new Hbar(amount_);
-
-    const allowanceTx = new AccountAllowanceApproveTransaction().approveHbarAllowance(_accountId, _treasuryId, _hbar);
-
-    if (!allowanceTx) return false;
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-    return false;
-  }
-
-  const deleteAllowanceNft = async (tokenId_, serialNum_) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-    const _nftId = new NftId(TokenId.fromString(tokenId_), parseInt(serialNum_));
-
-    const allowanceTx = new AccountAllowanceDeleteTransaction().deleteAllTokenNftAllowances(_nftId, _accountId);
-    if (!allowanceTx) return false;
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceTx.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-
-    return false;
-  }
-
-  const buyNFT = async (sellerId_, tokenId_, serialNumber_, hbarAmount_) => {
-    const _buyerId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _buyerId);
-    const _signer = hashConnect.getSigner(_provider);
-    const _treasuryId = AccountId.fromString(env.TREASURY_ID);
-    const _sellerId = AccountId.fromString(sellerId_);
-    const _nft = new NftId(TokenId.fromString(tokenId_), serialNumber_);
-
-    const sendBal = new Hbar(hbarAmount_);
-
-    const allowanceTx = new TransferTransaction()
-      .addHbarTransfer(_buyerId, sendBal.negated())
-      .addHbarTransfer(_sellerId, sendBal)
-      .addApprovedNftTransfer(_nft, _treasuryId, _buyerId);
-
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-    return false;
-  }
-
-  const sendNftToTreasury = async (tokenId_, serialNum_) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-    const _treasuryId = AccountId.fromString(env.TREASURY_ID);
-    const _nft = new NftId(TokenId.fromString(tokenId_), parseInt(serialNum_, 10));
-
-    const allowanceTx = new AccountAllowanceApproveTransaction()
-      .approveTokenNftAllowance(_nft, _accountId, _treasuryId);
-    if (!allowanceTx) return false;
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-    return false;
-  }
-
-  const sendHbarToTreasury = async (amount_) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-    const _treasuryId = AccountId.fromString(env.TREASURY_ID);
-
-    const _hbar = new Hbar(amount_);
-
-    const allowanceTx = new AccountAllowanceApproveTransaction().approveHbarAllowance(_accountId, _treasuryId, _hbar);
-    if (!allowanceTx) return false;
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-
-    return false;
-  }
-
-  const autoAssociate = async (tokenId_) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-
-    //Associate a token to an account and freeze the unsigned transaction for signing
-    const allowanceTx = await new TokenAssociateTransaction()
-      .setAccountId(_accountId)
-      .setTokenIds([TokenId.fromString(tokenId_)]);
-
-    if (!allowanceTx) return false;
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-    return false;
-  }
-
-  const autoNFTAssociate = async (tokenId) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-
-    //Associate a token to an account and freeze the unsigned transaction for signing
-    const allowanceTx = await new TokenAssociateTransaction()
-      .setAccountId(_accountId)
-      .setTokenIds([TokenId.fromString(tokenId)]);
-
-    if (!allowanceTx) return false;
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-    return false;
-  }
-
-  const receiveNft = async (tokenId_, serialNum_) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
-    const _signer = hashConnect.getSigner(_provider);
-    const _treasuryId = AccountId.fromString(env.TREASURY_ID);
-    const _nft = new NftId(TokenId.fromString(tokenId_), parseInt(serialNum_));
-
-    const allowanceTx = new TransferTransaction()
-      .addApprovedNftTransfer(_nft, _treasuryId, _accountId);
-    const allowanceFreeze = await allowanceTx.freezeWithSigner(_signer);
-    if (!allowanceFreeze) return false;
-    const allowanceSign = await allowanceFreeze.signWithSigner(_signer);
-    if (!allowanceSign) return false;
-    const allowanceSubmit = await allowanceSign.executeWithSigner(_signer);
-    if (!allowanceSubmit) return false;
-    const allowanceRx = await _provider.getTransactionReceipt(allowanceSubmit.transactionId);
-
-    if (allowanceRx.status._code === 22)
-      return true;
-
-    return false;
-  }
-
   const receiveReward = async (rewardAmount) => {
-    const _accountId = saveData.pairingData[0].accountIds[0];
-    const _provider = hashConnect.getProvider(netWork, saveData.topic, _accountId);
+    let _accountId
+    let _provider
+    if (saveData.pairingData.length == undefined) {
+      _accountId = saveData.pairingData.accountIds[0];
+      _provider = hashConnect.getProvider(netWork, saveData.pairingData.topic, _accountId);
+    }
+    else {
+      _accountId = saveData.pairingData[0].accountIds[0];
+      _provider = hashConnect.getProvider(netWork, saveData.pairingData[0].topic, _accountId);
+    }
+
     const _signer = hashConnect.getSigner(_provider);
     const _treasuryId = AccountId.fromString(env.TREASURY_ID);
 
@@ -450,7 +267,7 @@ export default function HashConnectProvider({
 
   return (
     <HashConnectAPIContext.Provider
-      value={{ walletData: saveData, installedExtensions, connect, disconnect, allowanceNft, allowanceMultipleNft, sendNftToTreasury, allowanceHbar, sendHbarToTreasury, autoAssociate, receiveNft, receiveReward, deleteAllowanceNft, buyNFT, autoNFTAssociate }}>
+      value={{ walletData: saveData, installedExtensions, connect, disconnect, allowanceNft, allowanceMultipleNft, receiveReward }}>
       {children}
     </HashConnectAPIContext.Provider>
   );

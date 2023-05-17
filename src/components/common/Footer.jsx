@@ -3,7 +3,7 @@ import './footer.css'
 
 const Footer = () => {
   return (
-    <footer className="border border-slate-500 backdrop-blur flex-none transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 dark:bg-slate-900/75 flex w-full items-center justify-center bottom-0 left-0 right-0 !fixed !z-50">
+    <footer className="border border-slate-500 backdrop-blur flex-none transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 bg-gray-900 dark:bg-slate-900/75 flex w-full items-center justify-center bottom-0 left-0 right-0 !z-50">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">

@@ -13,11 +13,13 @@ import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
 
 const StakePage = () => {
-    const { walletData, installedExtensions, connect, disconnect, allowanceNft, allowanceMultipleNft } = useHashConnect();
+    const { walletData, installedExtensions, connect, disconnect, allowanceNft, allowanceMultipleNft, receiveReward } = useHashConnect();
     const [walletId, setWalletId] = useState(null)
 
     const [loadingView, setLoadingView] = useState(false);
     const [stakeRatio, setStakeRatio] = useState('0.00');
+    const [mintedNFTCount, setMintedNFTCount] = useState(0)
+    const [totalNFTCount, setTotalNFTCount] = useState(0)
     const [rewardAmount, setRewardAmount] = useState(0)
     const [unstakedNFTList, setUnstakedNFTList] = useState([]);
     const [unstakedNFTCount, setUnstakedNFTCount] = useState(0);
@@ -53,16 +55,13 @@ const StakePage = () => {
 
     const getTotalInfo = async () => {
         setLoadingView(true);
-        console.log("start >>>>>>")
         await getStakeRatio();
         await getStakedNFTList();
-        await getXVerseNFTList();
+        await getNFTList();
         setLoadingView(false);
     }
 
     const getStakeRatio = async () => {
-        console.log("getStakeRatio >>>>>>>>>")
-        console.log(env.SERVER_URL + "/api/stake/load_stake_ratio")
         let _stakeRatioResult = await getRequest(env.SERVER_URL + "/api/stake/load_stake_ratio");
         if (!_stakeRatioResult) {
             toast.error("Something wrong with server!");
@@ -74,8 +73,9 @@ const StakePage = () => {
             setLoadingView(false);
             return;
         }
-        console.log(_stakeRatioResult.data)
-        setStakeRatio(_stakeRatioResult.data);
+        setStakeRatio(_stakeRatioResult.data.stakeRatio);
+        setMintedNFTCount(_stakeRatioResult.data.mintedNFTCount)
+        setTotalNFTCount(_stakeRatioResult.data.totalNFTCount)
     }
 
     const getStakedNFTList = async () => {
@@ -96,7 +96,7 @@ const StakePage = () => {
         setRewardAmount(_stakedResult.data.reward)
     }
 
-    const getXVerseNFTList = async () => {
+    const getNFTList = async () => {
         let _newWalletNftInfo = [];
         let _nextLink = null;
 
@@ -113,7 +113,7 @@ const StakePage = () => {
         while (1) {
             let _tempNftInfo = _WNinfo.nfts;
             for (let i = 0; i < _tempNftInfo.length; i++) {
-                if (_tempNftInfo[i].token_id === env.X_VERSE_NFT_ID) {
+                if (_tempNftInfo[i].token_id === env.BAS_APE_NFT_ID || _tempNftInfo[i].token_id === env.GAS_APE_NFT_ID) {
                     const _nftInfo = await getNftInfoFromMirrorNet(_tempNftInfo[i].token_id, _tempNftInfo[i].serial_number);
                     if (_nftInfo)
                         _newWalletNftInfo.push(_nftInfo)
@@ -386,42 +386,60 @@ const StakePage = () => {
         setLoadingView(false);
     }
 
+    const onHandleClaimReward = async () => {
+        setLoadingView(true);
+        const _res = await getRequest(env.SERVER_URL + "/api/stake/claim_reward?accountId=" + walletId);
+        if (!_res) {
+            toast.error("Something wrong with server!");
+            setLoadingView(false);
+            return;
+        }
+        if (!_res.result) {
+            toast.error(_res.error);
+            setLoadingView(false);
+            return;
+        }
+
+        const _tsxResult = await receiveReward(_res.data);
+        if (!_tsxResult) {
+            toast.error("Error! The transaction was rejected, or failed! Please try again!");
+            setLoadingView(false);
+            return;
+        }
+
+        setRewardAmount(0)
+        toast.success(`Claim reward successful!`)
+        setLoadingView(false);
+    }
+
     return (
         <>
-            <Navbar />
+            <Navbar walletId={walletId} onClickHashConnect={() => {
+                if (walletId != null) {
+                    setWalletId(null)
+                    onClickDisconnectHashPack()
+                }
+                else
+                    onClickConnectHashPack()
+            }} />
             <main>
                 <section id="home" className='section-module--stake'>
-                    <div className='flex flex-row justify-end items-center top-36 pr-8 border-slate-500 backdrop-blur transition-colors duration-500 lg:z-50'>
-                        <button type="button" className="text-center text-gray-200 hover:bg-gray-700 border border-gray-200 focus:outline-none rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 hover:scale-[0.98]"
-                            onClick={() => {
-                                if (walletId != null) {
-                                    setWalletId(null)
-                                    onClickDisconnectHashPack()
-                                }
-                                else
-                                    onClickConnectHashPack()
-                            }}
-                        >
-                            <img className='rounded-full mr-2' alt="..." src="https://wallet.hashpack.app/assets/favicon/favicon.ico" />
-                            {walletId != null ? walletId + " | Disconnect" : "Connect with HashPack"}
-                        </button>
-                    </div>
                     <div className='flex flex-col items-center pt-12 pb-4'>
                         <div className='w-4/5 text-lg text-white'>
                             <span>
-                                APE SQUAD STAKED <br />
                                 {stakeRatio}%
                             </span>
                         </div>
-                        <div className='w-4/5 h-7 mb-4 bg-[#134C73] rounded-lg mt-3'>
+                        <div className='w-4/5 h-7 mb-4 bg-[#134C73] mt-3'>
                             <div className="flex items-center justify-center bg-[#FFDD41] h-7 text-sm text-black text-center leading-none rounded-lg" style={{
                                 width: `${stakeRatio}%`,
                             }}>
-                                {
-                                    stakeRatio >= 4 &&
-                                    `${stakeRatio}%`
-                                }
                             </div>
+                        </div>
+                        <div className='w-4/5 text-lg text-white text-end'>
+                            <span>
+                                ({mintedNFTCount} Minted / {totalNFTCount} Total)
+                            </span>
                         </div>
                     </div>
                     {
@@ -432,7 +450,7 @@ const StakePage = () => {
                                     <img className='rounded-full mr-2' alt="..." src="https://wallet.hashpack.app/assets/favicon/favicon.ico" />
                                     <p className="text-2xl text-gray-400">{rewardAmount} ℏ</p>
                                 </div>
-                                <button className="inline-flex items-center px-3 py-2 text-xl text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+                                <button className="inline-flex items-center px-3 py-2 text-xl text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800" onClick={onHandleClaimReward}>
                                     Claim a reward
                                 </button>
                             </div>
@@ -457,7 +475,7 @@ const StakePage = () => {
                         }}
                         getUnSkatedNFTList={async () => {
                             setLoadingView(true);
-                            await getXVerseNFTList();
+                            await getNFTList();
                             setLoadingView(false);
                         }}
                     />
@@ -468,7 +486,6 @@ const StakePage = () => {
                     <ToastContainer autoClose={5000} draggableDirection="x" />
                 </section>
             </main>
-            <Footer />
         </>
     )
 }
