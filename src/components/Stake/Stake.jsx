@@ -358,7 +358,7 @@ const StakePage = () => {
         await getStakeRatio();
         await getStakedNFTList();
         setUnstakedNFTCount(unstakedNFTCount + 1);
-        toast.success("Staking Success!");
+        toast.success("Unstaking success!");
         setLoadingView(false);
     }
 
