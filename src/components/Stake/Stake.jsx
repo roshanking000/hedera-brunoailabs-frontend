@@ -492,9 +492,11 @@ const StakePage = () => {
                             onClickStakeAll(unstakedNftList);
                         }}
                         getUnSkatedNFTList={async () => {
-                            setLoadingView(true);
-                            await getNFTList();
-                            setLoadingView(false);
+                            if (walletId != null) {
+                                setLoadingView(true);
+                                await getNFTList();
+                                setLoadingView(false);
+                            }
                         }}
                     />
                     {
