@@ -27,6 +27,12 @@ const StakePage = () => {
     const [stakedNFTCount, setStakedNFTCount] = useState(0);
 
     useEffect(() => {
+        setLoadingView(true);
+        getStakeRatio()
+        setLoadingView(false);
+    }, [])
+
+    useEffect(() => {
         if (walletData.pairingData != null) {
             if (walletData.pairingData.length != 0) {
                 if (walletData.pairingData.length == undefined) {
@@ -55,7 +61,6 @@ const StakePage = () => {
 
     const getTotalInfo = async () => {
         setLoadingView(true);
-        await getStakeRatio();
         await getStakedNFTList();
         await getNFTList();
         setLoadingView(false);
