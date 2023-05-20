@@ -237,7 +237,7 @@ const StakePage = () => {
             imageUrl: nftInfo_.imageUrl,
             name: nftInfo_.name
         });
-        const _tsxResult = await allowanceNft(1, nftInfo_.token_id, nftInfo_.serial_number);
+        const _tsxResult = await allowanceNft(0, nftInfo_.token_id, nftInfo_.serial_number);
         if (!_tsxResult) {
             toast.error("Error! The transaction was rejected, or failed! Please try again!");
             setLoadingView(false);
