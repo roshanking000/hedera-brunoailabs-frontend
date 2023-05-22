@@ -456,7 +456,7 @@ const StakePage = () => {
                         </div>
                         <div className='w-4/5 text-lg text-white text-end'>
                             <span>
-                                ({mintedNFTCount} Minted / {totalNFTCount} Total)
+                                ({mintedNFTCount} Staked / {totalNFTCount} Total)
                             </span>
                         </div>
                     </div>
