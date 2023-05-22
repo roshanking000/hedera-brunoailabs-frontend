@@ -157,7 +157,7 @@ export default function HashConnectProvider({
     hashConnect.disconnect(saveData.topic)
   };
 
-  const allowanceNft = async (hbarAmount_, tokenId_, serialNum_) => {
+  const allowanceNft = async (tokenId_, serialNum_) => {
     let _accountId
     let _provider
     if (saveData.pairingData.length == undefined) {
@@ -174,7 +174,6 @@ export default function HashConnectProvider({
     const _nft = new NftId(TokenId.fromString(tokenId_), parseInt(serialNum_));
 
     const allowanceTx = new AccountAllowanceApproveTransaction()
-      .approveHbarAllowance(_accountId, _treasuryId, hbarAmount_)
       .approveTokenNftAllowance(_nft, _accountId, _treasuryId);
 
     if (!allowanceTx) return false;
